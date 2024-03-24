@@ -1,5 +1,5 @@
 [package]
-name = "profile-validation-runtime-api"
+name = "{{schelling_game_name}}-runtime-api"
 version = "0.1.0"
 edition = "2021"
 

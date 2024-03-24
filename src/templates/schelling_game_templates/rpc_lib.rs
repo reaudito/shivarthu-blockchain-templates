@@ -3,7 +3,7 @@ use jsonrpsee::{
 	proc_macros::rpc,
 	types::error::{CallError, ErrorCode, ErrorObject},
 };
-use profile_validation_runtime_api::ProfileValidationApi as ProfileValidationRuntimeApi;
+use profile_validation_runtime_api::{{trait_name}} as {{runtime_pallet_name}}RuntimeApi;
 use sp_api::codec::Codec;
 use sp_api::ProvideRuntimeApi;
 use sp_blockchain::HeaderBackend;
@@ -12,63 +12,63 @@ use std::sync::Arc;
 type ChallengePostId = u64;
 
 #[rpc(client, server)]
-pub trait ProfileValidationApi<BlockHash, AccountId> {
-	#[method(name = "profilevalidation_challengerevidence")]
+pub trait {{trait_name}}<BlockHash, AccountId> {
+	#[method(name = "{{rpc_url}}_challengerevidence")]
 	fn get_challengers_evidence(
 		&self,
-		profile_user_account: AccountId,
+		{{params_variable}}: {{params_variable_type}},
 		offset: u64,
 		limit: u16,
 		at: Option<BlockHash>,
 	) -> RpcResult<Vec<ChallengePostId>>;
-	#[method(name = "profilevalidation_evidenceperiodendblock")]
+	#[method(name = "{{rpc_url}}_evidenceperiodendblock")]
 	fn get_evidence_period_end_block(
 		&self,
-		profile_user_account: AccountId,
+		{{params_variable}}: {{params_variable_type}},
 		at: Option<BlockHash>,
 	) -> RpcResult<Option<u32>>;
-	#[method(name = "profilevalidation_stakingperiodendblock")]
+	#[method(name = "{{rpc_url}}_stakingperiodendblock")]
 	fn get_staking_period_end_block(
 		&self,
-		profile_user_account: AccountId,
+		{{params_variable}}: {{params_variable_type}},
 		at: Option<BlockHash>,
 	) -> RpcResult<Option<u32>>;
-	#[method(name = "profilevalidation_drawingperiodend")]
+	#[method(name = "{{rpc_url}}_drawingperiodend")]
 	fn get_drawing_period_end(
 		&self,
-		profile_user_account: AccountId,
+		{{params_variable}}: {{params_variable_type}},
 		at: Option<BlockHash>,
 	) -> RpcResult<(u64, u64, bool)>;
-	#[method(name = "profilevalidation_commitendblock")]
+	#[method(name = "{{rpc_url}}_commitendblock")]
 	fn get_commit_period_end_block(
 		&self,
-		profile_user_account: AccountId,
+		{{params_variable}}: {{params_variable_type}},
 		at: Option<BlockHash>,
 	) -> RpcResult<Option<u32>>;
-	#[method(name = "profilevalidation_voteendblock")]
+	#[method(name = "{{rpc_url}}_voteendblock")]
 	fn get_vote_period_end_block(
 		&self,
-		profile_user_account: AccountId,
+		{{params_variable}}: {{params_variable_type}},
 		at: Option<BlockHash>,
 	) -> RpcResult<Option<u32>>;
-	#[method(name = "profilevalidation_selectedjuror")]
+	#[method(name = "{{rpc_url}}_selectedjuror")]
 	fn selected_as_juror(
 		&self,
-		profile_user_account: AccountId,
+		{{params_variable}}: {{params_variable_type}},
 		who: AccountId,
 		at: Option<BlockHash>,
 	) -> RpcResult<bool>;
 }
 
 /// A struct that implements the `SumStorageApi`.
-pub struct ProfileValidation<C, M> {
+pub struct {{runtime_pallet_name}}<C, M> {
 	// If you have more generics, no need to SumStorage<C, M, N, P, ...>
 	// just use a tuple like SumStorage<C, (M, N, P, ...)>
 	client: Arc<C>,
 	_marker: std::marker::PhantomData<M>,
 }
 
-impl<C, M> ProfileValidation<C, M> {
+impl<C, M> {{runtime_pallet_name}}<C, M> {
 	/// Create new `SumStorage` instance with the given reference to the client.
 	pub fn new(client: Arc<C>) -> Self {
 		Self { client, _marker: Default::default() }
@@ -94,18 +94,18 @@ impl From<Error> for i32 {
 }
 
 
-impl<C, Block, AccountId> ProfileValidationApiServer<<Block as BlockT>::Hash, AccountId> for ProfileValidation<C, Block>
+impl<C, Block, AccountId> {{trait_name}}Server<<Block as BlockT>::Hash, AccountId> for {{runtime_pallet_name}}<C, Block>
 where
 	Block: BlockT,
 	AccountId: Codec,
 	C: Send + Sync + 'static,
 	C: ProvideRuntimeApi<Block>,
 	C: HeaderBackend<Block>,
-	C::Api: ProfileValidationRuntimeApi<Block, AccountId>,
+	C::Api: {{runtime_pallet_name}}RuntimeApi<Block, AccountId>,
 {
 	fn get_challengers_evidence(
 		&self,
-		profile_user_account: AccountId,
+		{{params_variable}}: {{params_variable_type}},
 		offset: u64,
 		limit: u16,
 		at: Option<Block::Hash>,
@@ -116,7 +116,7 @@ where
 			self.client.info().best_hash);
 
 		let runtime_api_result =
-			api.get_challengers_evidence(at, profile_user_account, offset, limit);
+			api.get_challengers_evidence(at, {{params_variable}}, offset, limit);
 			fn map_err(error: impl ToString, desc: &'static str) -> CallError {
 				CallError::Custom(ErrorObject::owned(
 					Error::RuntimeError.into(),
@@ -129,7 +129,7 @@ where
 	}
 	fn get_evidence_period_end_block(
 		&self,
-		profile_user_account: AccountId,
+		{{params_variable}}: {{params_variable_type}},
 		at: Option<Block::Hash>,
 	) -> RpcResult<Option<u32>> {
 		let api = self.client.runtime_api();
@@ -137,7 +137,7 @@ where
 			// If the block hash is not supplied assume the best block.
 			self.client.info().best_hash);
 
-		let runtime_api_result = api.get_evidence_period_end_block(at, profile_user_account);
+		let runtime_api_result = api.get_evidence_period_end_block(at, {{params_variable}});
 		fn map_err(error: impl ToString, desc: &'static str) -> CallError {
 			CallError::Custom(ErrorObject::owned(
 				Error::RuntimeError.into(),
@@ -150,7 +150,7 @@ where
 	}
 	fn get_staking_period_end_block(
 		&self,
-		profile_user_account: AccountId,
+		{{params_variable}}: {{params_variable_type}},
 		at: Option<Block::Hash>,
 	) -> RpcResult<Option<u32>> {
 		let api = self.client.runtime_api();
@@ -158,7 +158,7 @@ where
 			// If the block hash is not supplied assume the best block.
 			self.client.info().best_hash);
 
-		let runtime_api_result = api.get_staking_period_end_block(at, profile_user_account);
+		let runtime_api_result = api.get_staking_period_end_block(at, {{params_variable}});
 		fn map_err(error: impl ToString, desc: &'static str) -> CallError {
 			CallError::Custom(ErrorObject::owned(
 				Error::RuntimeError.into(),
@@ -171,7 +171,7 @@ where
 	}
 	fn get_drawing_period_end(
 		&self,
-		profile_user_account: AccountId,
+		{{params_variable}}: {{params_variable_type}},
 		at: Option<Block::Hash>,
 	) -> RpcResult<(u64, u64, bool)> {
 		let api = self.client.runtime_api();
@@ -179,7 +179,7 @@ where
 			// If the block hash is not supplied assume the best block.
 			self.client.info().best_hash);
 
-		let runtime_api_result = api.get_drawing_period_end(at, profile_user_account);
+		let runtime_api_result = api.get_drawing_period_end(at, {{params_variable}});
 		fn map_err(error: impl ToString, desc: &'static str) -> CallError {
 			CallError::Custom(ErrorObject::owned(
 				Error::RuntimeError.into(),
@@ -193,7 +193,7 @@ where
 
 	fn get_commit_period_end_block(
 		&self,
-		profile_user_account: AccountId,
+		{{params_variable}}: {{params_variable_type}},
 		at: Option<Block::Hash>,
 	) -> RpcResult<Option<u32>> {
 		let api = self.client.runtime_api();
@@ -201,7 +201,7 @@ where
 			// If the block hash is not supplied assume the best block.
 			self.client.info().best_hash);
 
-		let runtime_api_result = api.get_commit_period_end_block(at, profile_user_account);
+		let runtime_api_result = api.get_commit_period_end_block(at, {{params_variable}});
 		fn map_err(error: impl ToString, desc: &'static str) -> CallError {
 			CallError::Custom(ErrorObject::owned(
 				Error::RuntimeError.into(),
@@ -215,7 +215,7 @@ where
 
 	fn get_vote_period_end_block(
 		&self,
-		profile_user_account: AccountId,
+		{{params_variable}}: {{params_variable_type}},
 		at: Option<Block::Hash>,
 	) -> RpcResult<Option<u32>> {
 		let api = self.client.runtime_api();
@@ -223,7 +223,7 @@ where
 			// If the block hash is not supplied assume the best block.
 			self.client.info().best_hash);
 
-		let runtime_api_result = api.get_vote_period_end_block(at, profile_user_account);
+		let runtime_api_result = api.get_vote_period_end_block(at, {{params_variable}});
 		fn map_err(error: impl ToString, desc: &'static str) -> CallError {
 			CallError::Custom(ErrorObject::owned(
 				Error::RuntimeError.into(),
@@ -237,7 +237,7 @@ where
 
 	fn selected_as_juror(
 		&self,
-		profile_user_account: AccountId,
+		{{params_variable}}: {{params_variable_type}},
 		who: AccountId,
 		at: Option<Block::Hash>,
 	) -> RpcResult<bool> {
@@ -246,7 +246,7 @@ where
 			// If the block hash is not supplied assume the best block.
 			self.client.info().best_hash);
 
-		let runtime_api_result = api.selected_as_juror(at, profile_user_account, who);
+		let runtime_api_result = api.selected_as_juror(at, {{params_variable}}, who);
 		fn map_err(error: impl ToString, desc: &'static str) -> CallError {
 			CallError::Custom(ErrorObject::owned(
 				Error::RuntimeError.into(),
