@@ -10,7 +10,6 @@ pub fn department_funding() {
     context.insert("params_variable_type", "DepartmentRequiredFundId");
     context.insert("params_type", "number");
     context.insert("schelling_game_name", "department-funding");
-    context.insert("trait_name", &"DepartmentFundingApi");
     context.insert("runtime_pallet_name", &"DepartmentFunding");
     context.insert("underscore_name", &"department_funding");
     context.insert("rpc_url", &"departmentfunding");

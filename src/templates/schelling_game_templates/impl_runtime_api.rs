@@ -1,4 +1,4 @@
-impl {{underscore_name}}_runtime_api::{{trait_name}}<Block, AccountId> for Runtime {
+impl {{underscore_name}}_runtime_api::{{runtime_pallet_name}}Api<Block, AccountId> for Runtime {
 
     fn get_challengers_evidence({{params_variable}}: {{params_variable_type}}, offset: u64, limit: u16) -> Vec<ChallengePostId> {
         {{runtime_pallet_name}}::get_challengers_evidence({{params_variable}}, offset, limit)

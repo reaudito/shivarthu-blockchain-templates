@@ -3,7 +3,7 @@ use jsonrpsee::{
 	proc_macros::rpc,
 	types::error::{CallError, ErrorCode, ErrorObject},
 };
-use profile_validation_runtime_api::{{trait_name}} as {{runtime_pallet_name}}RuntimeApi;
+use profile_validation_runtime_api::{{runtime_pallet_name}}Api as {{runtime_pallet_name}}RuntimeApi;
 use sp_api::codec::Codec;
 use sp_api::ProvideRuntimeApi;
 use sp_blockchain::HeaderBackend;
@@ -12,7 +12,7 @@ use std::sync::Arc;
 type ChallengePostId = u64;
 
 #[rpc(client, server)]
-pub trait {{trait_name}}<BlockHash, AccountId> {
+pub trait {{runtime_pallet_name}}Api<BlockHash, AccountId> {
 	#[method(name = "{{rpc_url}}_challengerevidence")]
 	fn get_challengers_evidence(
 		&self,
@@ -94,7 +94,7 @@ impl From<Error> for i32 {
 }
 
 
-impl<C, Block, AccountId> {{trait_name}}Server<<Block as BlockT>::Hash, AccountId> for {{runtime_pallet_name}}<C, Block>
+impl<C, Block, AccountId> {{runtime_pallet_name}}ApiServer<<Block as BlockT>::Hash, AccountId> for {{runtime_pallet_name}}<C, Block>
 where
 	Block: BlockT,
 	AccountId: Codec,

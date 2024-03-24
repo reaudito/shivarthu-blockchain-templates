@@ -7,7 +7,7 @@ use sp_api::codec::Codec;
 type ChallengePostId = u64;
 
 sp_api::decl_runtime_apis! {
-	pub trait ProfileValidationApi<AccountId> where AccountId: Codec {
+	pub trait {{runtime_pallet_name}}Api<AccountId> where AccountId: Codec {
 		fn get_challengers_evidence({{params_variable}}: {{params_variable_type}}, offset: u64, limit: u16) -> Vec<ChallengePostId>;
 		fn get_evidence_period_end_block({{params_variable}}: {{params_variable_type}}) -> Option<u32>;
 		fn get_staking_period_end_block({{params_variable}}: {{params_variable_type}}) -> Option<u32>;

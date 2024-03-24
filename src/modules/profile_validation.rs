@@ -10,9 +10,9 @@ pub fn profile_validation() {
     context.insert("params_variable_type", "AccountId");
     context.insert("params_type", "account");
     context.insert("schelling_game_name", "profile-validation");
-    context.insert("trait_name", &"ProfileValidationApi");
     context.insert("runtime_pallet_name", &"ProfileValidation");
     context.insert("underscore_name", &"profile_validation");
+    context.insert("rpc_url", &"profilevalidation");
     let save_directory = "profile_validation";
     let template_dir = "src/templates/schelling_game_templates";
     let template_folder = "schelling_game_templates";
