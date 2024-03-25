@@ -6,6 +6,13 @@ use tera::{Context, Result};
 
 pub fn department_funding() {
     let mut context = Context::new();
+    let get_key = r#"let block_number =
+        Self::get_block_number_of_schelling_game(department_required_fund_id)?;
+
+    let key = SumTreeName::DepartmentRequiredFund {
+        department_required_fund_id,
+        block_number: block_number.clone(),
+    };"#;
     context.insert("params_variable", &"department_required_fund_id");
     context.insert("params_variable_type", "DepartmentRequiredFundId");
     context.insert("params_type", "number");
@@ -13,6 +20,8 @@ pub fn department_funding() {
     context.insert("runtime_pallet_name", &"DepartmentFunding");
     context.insert("underscore_name", &"department_funding");
     context.insert("rpc_url", &"departmentfunding");
+    context.insert("get_key", &get_key);
+
 
     let save_directory = "department_funding";
     let template_dir = "src/templates/schelling_game_templates";

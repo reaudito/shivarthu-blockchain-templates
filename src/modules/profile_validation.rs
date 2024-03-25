@@ -6,6 +6,11 @@ use tera::{Context, Result};
 
 pub fn profile_validation() {
     let mut context = Context::new();
+    let get_key = r#"let block_number = <ProfileValidationBlock<T>>::get(&profile_user_account);
+        let key = SumTreeName::ProfileValidation {
+        citizen_address: profile_user_account.clone(),
+        block_number,
+        };"#;
     context.insert("params_variable", &"profile_user_account");
     context.insert("params_variable_type", "AccountId");
     context.insert("params_type", "account");
@@ -13,6 +18,7 @@ pub fn profile_validation() {
     context.insert("runtime_pallet_name", &"ProfileValidation");
     context.insert("underscore_name", &"profile_validation");
     context.insert("rpc_url", &"profilevalidation");
+    context.insert("get_key", &get_key);
     let save_directory = "profile_validation";
     let template_dir = "src/templates/schelling_game_templates";
     let template_folder = "schelling_game_templates";
