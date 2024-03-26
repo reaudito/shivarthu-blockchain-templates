@@ -2,7 +2,8 @@ use crate::*;
 
 
 impl<T: Config> Pallet<T> {
-
+	
+	// Block code start
 
 	pub fn get_evidence_period_end_block({{params_variable}}: {{params_variable_type}}) -> Option<u32> {
 		let now = <frame_system::Pallet<T>>::block_number();
@@ -75,5 +76,8 @@ impl<T: Config> Pallet<T> {
 		let result = T::SchellingGameSharedSource::selected_as_juror_helper_link(key, who);
 		result
 	}
+
+	// Block code end
+
 
 }

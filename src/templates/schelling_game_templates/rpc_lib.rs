@@ -3,14 +3,16 @@ use jsonrpsee::{
 	proc_macros::rpc,
 	types::error::{CallError, ErrorCode, ErrorObject},
 };
-use profile_validation_runtime_api::{{runtime_pallet_name}}Api as {{runtime_pallet_name}}RuntimeApi;
+use {{underscore_name}}_runtime_api::{{runtime_pallet_name}}Api as {{runtime_pallet_name}}RuntimeApi;
 use sp_api::codec::Codec;
 use sp_api::ProvideRuntimeApi;
 use sp_blockchain::HeaderBackend;
 use sp_runtime::traits::Block as BlockT;
 use std::sync::Arc;
 type ChallengePostId = u64;
-
+{% if params_type is containing("number") %}
+type {{params_variable_type}} = {{param_type_value}};
+{% endif %}
 #[rpc(client, server)]
 pub trait {{runtime_pallet_name}}Api<BlockHash, AccountId> {
 	#[method(name = "{{rpc_url}}_challengerevidence")]

@@ -7,7 +7,7 @@ use tera::{Context, Result};
 pub fn department_funding() {
     let mut context = Context::new();
     let get_key = r#"let block_number =
-        Self::get_block_number_of_schelling_game(department_required_fund_id)?;
+        Self::get_block_number_of_schelling_game(department_required_fund_id).unwrap();
 
     let key = SumTreeName::DepartmentRequiredFund {
         department_required_fund_id,
@@ -16,6 +16,7 @@ pub fn department_funding() {
     context.insert("params_variable", &"department_required_fund_id");
     context.insert("params_variable_type", "DepartmentRequiredFundId");
     context.insert("params_type", "number");
+    context.insert("param_type_value", "u64");
     context.insert("schelling_game_name", "department-funding");
     context.insert("runtime_pallet_name", &"DepartmentFunding");
     context.insert("underscore_name", &"department_funding");

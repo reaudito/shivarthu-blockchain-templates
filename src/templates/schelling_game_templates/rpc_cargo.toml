@@ -1,5 +1,5 @@
 [package]
-name = "profile-validation-rpc"
+name = "{{schelling_game_name}}-rpc"
 version = "0.1.0"
 edition = "2021"
 

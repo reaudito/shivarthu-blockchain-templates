@@ -5,6 +5,9 @@
 use frame_support::sp_std::{prelude::*};
 use sp_api::codec::Codec;
 type ChallengePostId = u64;
+{% if params_type is containing("number") %}
+type {{params_variable_type}} = {{param_type_value}};
+{% endif %}
 
 sp_api::decl_runtime_apis! {
 	pub trait {{runtime_pallet_name}}Api<AccountId> where AccountId: Codec {
