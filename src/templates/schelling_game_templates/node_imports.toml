@@ -1,0 +1,4 @@
+
+
+{{schelling_game_name}}-runtime-api = {path="../pallets/{{schelling_game_name}}/{{schelling_game_name}}-runtime-api", default-features = false}
+{{schelling_game_name}}-rpc= { path="../pallets/{{schelling_game_name}}/{{schelling_game_name}}-rpc", default-features = false}

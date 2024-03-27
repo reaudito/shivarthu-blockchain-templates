@@ -5,7 +5,7 @@ impl<T: Config> Pallet<T> {
 	
 	// Block code start
 
-	pub fn get_evidence_period_end_block({{params_variable}}: {{params_variable_type}}) -> Option<u32> {
+	pub fn get_evidence_period_end_block({{params_variable}}: {{params_variable_pallet_function_type}}) -> Option<u32> {
 		let now = <frame_system::Pallet<T>>::block_number();
 
 		{{get_key}}
@@ -22,7 +22,7 @@ impl<T: Config> Pallet<T> {
 	}
 
 	
-	pub fn get_staking_period_end_block({{params_variable}}: {{params_variable_type}}) -> Option<u32> {
+	pub fn get_staking_period_end_block({{params_variable}}: {{params_variable_pallet_function_type}}) -> Option<u32> {
 		let now = <frame_system::Pallet<T>>::block_number();
 		
 		{{get_key}}
@@ -35,7 +35,7 @@ impl<T: Config> Pallet<T> {
 		result
 	}
 
-	pub fn get_drawing_period_end({{params_variable}}: {{params_variable_type}}) -> (u64, u64, bool) {
+	pub fn get_drawing_period_end({{params_variable}}: {{params_variable_pallet_function_type}}) -> (u64, u64, bool) {
 		{{get_key}}
 		let phase_data = Self::get_phase_data();
 
@@ -44,7 +44,7 @@ impl<T: Config> Pallet<T> {
 		result
 	}
 
-	pub fn get_commit_period_end_block({{params_variable}}: {{params_variable_type}}) -> Option<u32> {
+	pub fn get_commit_period_end_block({{params_variable}}: {{params_variable_pallet_function_type}}) -> Option<u32> {
 		let now = <frame_system::Pallet<T>>::block_number();
 		
 		{{get_key}}
@@ -57,7 +57,7 @@ impl<T: Config> Pallet<T> {
 		result
 	}
 
-	pub fn get_vote_period_end_block({{params_variable}}: {{params_variable_type}}) -> Option<u32> {
+	pub fn get_vote_period_end_block({{params_variable}}: {{params_variable_pallet_function_type}}) -> Option<u32> {
 		let now = <frame_system::Pallet<T>>::block_number();
 
 		{{get_key}}
@@ -70,7 +70,7 @@ impl<T: Config> Pallet<T> {
 		result
 	}
 
-	pub fn selected_as_juror({{params_variable}}: {{params_variable_type}}, who: T::AccountId) -> bool {
+	pub fn selected_as_juror({{params_variable}}: {{params_variable_pallet_function_type}}, who: T::AccountId) -> bool {
 		{{get_key}}
 
 		let result = T::SchellingGameSharedSource::selected_as_juror_helper_link(key, who);

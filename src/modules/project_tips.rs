@@ -4,28 +4,24 @@ use std::fs;
 use std::path::Path;
 use tera::{Context, Result};
 
-pub fn department_funding() {
+pub fn project_tips() {
     let mut context = Context::new();
-    let get_key = r#"let block_number =
-        Self::get_block_number_of_schelling_game(department_required_fund_id).unwrap();
+    let get_key = r#"let block_number = Self::get_block_number_of_schelling_game(project_id).unwrap();
 
-    let key = SumTreeName::DepartmentRequiredFund {
-        department_required_fund_id,
-        block_number: block_number.clone(),
-    };"#;
-    context.insert("params_variable", &"department_required_fund_id");
-    context.insert("params_variable_pallet_function_type", "DepartmentRequiredFundId");
-    context.insert("params_variable_type", "DepartmentRequiredFundId");
+            let key = SumTreeName::ProjectTips { project_id, block_number: block_number.clone() };"#;
+    context.insert("params_variable", &"project_id");
+    context.insert("params_variable_pallet_function_type", "ProjectId");
+    context.insert("params_variable_type", "ProjectId");
     context.insert("params_type", "number");
     context.insert("param_type_value", "u64");
-    context.insert("schelling_game_name", "department-funding");
-    context.insert("runtime_pallet_name", &"DepartmentFunding");
-    context.insert("underscore_name", &"department_funding");
-    context.insert("rpc_url", &"departmentfunding");
+    context.insert("schelling_game_name", "project-tips");
+    context.insert("runtime_pallet_name", &"ProjectTips");
+    context.insert("underscore_name", &"project_tips");
+    context.insert("rpc_url", &"projecttips");
     context.insert("get_key", &get_key);
 
 
-    let save_directory = "department_funding";
+    let save_directory = "project_tips";
     let template_dir = "src/templates/schelling_game_templates";
     let template_folder = "schelling_game_templates";
  // Read the directory

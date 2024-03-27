@@ -4,28 +4,28 @@ use std::fs;
 use std::path::Path;
 use tera::{Context, Result};
 
-pub fn department_funding() {
+pub fn positive_externality() {
     let mut context = Context::new();
-    let get_key = r#"let block_number =
-        Self::get_block_number_of_schelling_game(department_required_fund_id).unwrap();
+    let get_key = r#"let pe_block_number =
+    <ValidationPositiveExternalityBlock<T>>::get(user_to_calculate.clone());
 
-    let key = SumTreeName::DepartmentRequiredFund {
-        department_required_fund_id,
-        block_number: block_number.clone(),
+    let key = SumTreeName::PositiveExternality {
+        user_address: user_to_calculate,
+        block_number: pe_block_number.clone(),
     };"#;
-    context.insert("params_variable", &"department_required_fund_id");
-    context.insert("params_variable_pallet_function_type", "DepartmentRequiredFundId");
-    context.insert("params_variable_type", "DepartmentRequiredFundId");
-    context.insert("params_type", "number");
-    context.insert("param_type_value", "u64");
-    context.insert("schelling_game_name", "department-funding");
-    context.insert("runtime_pallet_name", &"DepartmentFunding");
-    context.insert("underscore_name", &"department_funding");
-    context.insert("rpc_url", &"departmentfunding");
+    context.insert("params_variable", &"user_to_calculate");
+    context.insert("params_variable_pallet_function_type", "T::AccountId");
+    context.insert("params_variable_type", "AccountId");
+    context.insert("params_type", "account");
+    context.insert("param_type_value", &"none");
+    context.insert("schelling_game_name", "positive-externality");
+    context.insert("runtime_pallet_name", &"PositiveExternality");
+    context.insert("underscore_name", &"positive_externality");
+    context.insert("rpc_url", &"positiveexternality");
     context.insert("get_key", &get_key);
 
-
-    let save_directory = "department_funding";
+    let save_directory = "positive_externality";
+    
     let template_dir = "src/templates/schelling_game_templates";
     let template_folder = "schelling_game_templates";
  // Read the directory

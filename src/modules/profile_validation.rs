@@ -12,8 +12,10 @@ pub fn profile_validation() {
         block_number,
         };"#;
     context.insert("params_variable", &"profile_user_account");
+    context.insert("params_variable_pallet_function_type", "T::AccountId");
     context.insert("params_variable_type", "AccountId");
     context.insert("params_type", "account");
+    context.insert("param_type_value", &"none");
     context.insert("schelling_game_name", "profile-validation");
     context.insert("runtime_pallet_name", &"ProfileValidation");
     context.insert("underscore_name", &"profile_validation");
