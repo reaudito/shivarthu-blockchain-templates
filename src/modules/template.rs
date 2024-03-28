@@ -4,6 +4,9 @@ use tera::Tera;
 // pub const OUT_DIR: &str = "out_dir";
 
 pub const OUT_DIR: &str = "out_dir";
+// pub const PROJECT_DIR: &str = "project_dir";
+
+pub const PROJECT_DIR: &str = "/home/amiya/Documents/workspace/shivarthu/working_directory/substrate-node-template/pallets";
 
 lazy_static! {
     pub static ref TEMPLATES: Tera = {

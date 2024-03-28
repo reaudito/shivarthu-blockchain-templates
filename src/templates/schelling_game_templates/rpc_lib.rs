@@ -9,12 +9,15 @@ use sp_api::ProvideRuntimeApi;
 use sp_blockchain::HeaderBackend;
 use sp_runtime::traits::Block as BlockT;
 use std::sync::Arc;
+{% if schelling_game_name is containing("profile-validation") %}
 type ChallengePostId = u64;
+{% endif %}
 {% if params_type is containing("number") %}
 type {{params_variable_type}} = {{param_type_value}};
 {% endif %}
 #[rpc(client, server)]
 pub trait {{runtime_pallet_name}}Api<BlockHash, AccountId> {
+	{% if schelling_game_name is containing("profile-validation") %}
 	#[method(name = "{{rpc_url}}_challengerevidence")]
 	fn get_challengers_evidence(
 		&self,
@@ -23,6 +26,8 @@ pub trait {{runtime_pallet_name}}Api<BlockHash, AccountId> {
 		limit: u16,
 		at: Option<BlockHash>,
 	) -> RpcResult<Vec<ChallengePostId>>;
+	{% endif %}
+	
 	#[method(name = "{{rpc_url}}_evidenceperiodendblock")]
 	fn get_evidence_period_end_block(
 		&self,
@@ -105,6 +110,7 @@ where
 	C: HeaderBackend<Block>,
 	C::Api: {{runtime_pallet_name}}RuntimeApi<Block, AccountId>,
 {
+	{% if schelling_game_name is containing("profile-validation") %}
 	fn get_challengers_evidence(
 		&self,
 		{{params_variable}}: {{params_variable_type}},
@@ -129,6 +135,8 @@ where
 			let res = runtime_api_result.map_err(|e| map_err(e, "Unable to query dispatch info."))?;
 			Ok(res)
 	}
+
+	{% endif %}
 	fn get_evidence_period_end_block(
 		&self,
 		{{params_variable}}: {{params_variable_type}},
